@@ -201,6 +201,9 @@ abstract class ClientObject
     }
 
 
+    public function getProperties(){
+    	return $this->properties;
+    }
     /**
      * A preferred way of getting the client object property
      * @param $name
@@ -224,6 +227,10 @@ abstract class ClientObject
             $this->changed_properties[$name] = $value;
         }
         $this->{$name} = $value;
+    }
+    
+    public function debug(){
+    	var_dump($this->properties);
     }
 
 
