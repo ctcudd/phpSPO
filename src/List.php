@@ -1,8 +1,7 @@
 <?php
     
 namespace SharePoint\PHP\Client;
-
-
+require_once(__DIR__.'/FieldCreationInformationWrapper.php');
 /**
  * Represents a SharePoint list.
  * @property FieldCollection Fields
@@ -29,6 +28,36 @@ class SPList extends SecurableObject
         $this->getContext()->addQuery($qry,$item);
         return $item;
     }
+    
+    public function addField(FieldCreationInformation $parameters){
+    	$field = new Field($this->getContext());
+    	/*$payload = array(
+    	 'FieldTypeKind' => $parameters->FieldTypeKind,
+    	 'Title'=>  $parameters->Title,
+    	 'SchemaXml' => $parameters->SchemaXml,
+    	);*/
+    	
+    	$path = $this->getUrl()."/fields";
+    	if($parameters->FieldTypeKind == FieldTypeKind::Lookup){
+    		
+    	}
+//     	if($parameters->SchemaXml){
+//     		$path .= "/createfieldasxml";
+//     	}
+    	$qry = new ClientQuery($path,ClientActionType::Create,$parameters);
+    	$this->getContext()->addQuery($qry,$field);
+    	return $field;
+    }
+    
+    public function addComplexField(ComplexFieldCreationInformation $parameters){
+    	$field = new Field($this->getContext());
+    	$path = $this->getUrl()."/fields/addfield";
+    	$parameters = new FieldCreationInformationWrapper($parameters);
+    	$qry = new ClientQuery($path,ClientActionType::Create,$parameters);
+    	$this->getContext()->addQuery($qry,$field);
+    	return $field;
+    }
+    
 
     /**
      * Returns the list item with the specified list item identifier.
