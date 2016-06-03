@@ -30,7 +30,7 @@ abstract class FieldTypeKind extends Enum {
 	/**
 	 * Specifies that the field contains multiple lines of text.
 	 * Field allows larger amounts of text.
-	 * @var intF
+	 * @var int
 	 */
 	const Note = 3;
 	/**

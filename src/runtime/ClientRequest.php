@@ -114,9 +114,6 @@ class ClientRequest
             'method' => $operationType == ClientActionType::Read ? 'GET' : 'POST'
         );
         
-		if(self::$debug){
-			var_dump($requestOptions);
-		}
         if ($operationType == ClientActionType::Update) {
             $requestOptions['headers']["IF-MATCH"] = "*";
             $requestOptions['headers']["X-HTTP-Method"] = "MERGE";
@@ -124,6 +121,9 @@ class ClientRequest
             $requestOptions['headers']["IF-MATCH"] = "*";
             $requestOptions['headers']["X-HTTP-Method"] = "DELETE";
         }
+		if(self::$debug){
+			var_dump($requestOptions);
+		}
         return $requestOptions;
     }
 

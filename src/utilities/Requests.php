@@ -9,6 +9,8 @@ class Requests
 	 * @var int
 	 */
 	private static $sslVersion = null;
+	
+	public static $debug = false;
 
 	private static $curlopts = array(
 			CURLOPT_SSL_VERIFYHOST => false,
@@ -62,6 +64,9 @@ class Requests
 		   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_HEADER, $passHeaders);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        if(self::$debug){
+        	echo "CURL POST $url\nheaders: ".print_r($headers,1)."\ndata: ".print_r($data,1);
+        }
         $result = curl_exec($ch);
         if ($result === false) {
             throw new \Exception(curl_error($ch));
