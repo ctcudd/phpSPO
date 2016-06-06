@@ -30,6 +30,8 @@ class ClientRequest
 
 
     private $formatType;
+    
+    public static $debug = false;
 
 
 	public function __construct($url, AuthenticationContext $authContext)
@@ -95,6 +97,7 @@ class ClientRequest
         $json = json_decode($response);
         //handle errors
         if (isset($json->error)) {
+        	var_dump($json->error);
             throw new \RuntimeException("Error: " . $json->error->message->value);
         }
         return $json;
@@ -111,7 +114,6 @@ class ClientRequest
             'method' => $operationType == ClientActionType::Read ? 'GET' : 'POST'
         );
         
-
         if ($operationType == ClientActionType::Update) {
             $requestOptions['headers']["IF-MATCH"] = "*";
             $requestOptions['headers']["X-HTTP-Method"] = "MERGE";
@@ -119,6 +121,9 @@ class ClientRequest
             $requestOptions['headers']["IF-MATCH"] = "*";
             $requestOptions['headers']["X-HTTP-Method"] = "DELETE";
         }
+		if(self::$debug){
+			var_dump($requestOptions);
+		}
         return $requestOptions;
     }
 
